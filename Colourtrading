@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Colour Demo</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f5f7fb;
+      color: #172033;
+      min-height: 100vh;
+    }
+
+    /* TOP BAR */
+    .topbar {
+      background: #111827;
+      color: white;
+      padding: 18px 18px 22px;
+      border-radius: 0 0 25px 25px;
+    }
+
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .profile {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #ffffff22;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .balance-box {
+      margin-top: 20px;
+    }
+
+    .balance-title {
+      color: #cbd5e1;
+      font-size: 13px;
+    }
+
+    .balance {
+      font-size: 32px;
+      font-weight: 800;
+      margin-top: 4px;
+    }
+
+    /* MAIN */
+    .container {
+      width: 100%;
+      max-width: 520px;
+      margin: auto;
+      padding: 16px;
+      padding-bottom: 90px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 15px;
+      box-shadow: 0 7px 25px rgba(15, 23, 42, 0.07);
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 15px;
+    }
+
+    /* TIMER */
+    .timer-card {
+      text-align: center;
+    }
+
+    .round-label {
+      color: #64748b;
+      font-size: 13px;
+    }
+
+    .timer {
+      font-size: 48px;
+      font-weight: 900;
+      margin: 8px 0;
+    }
+
+    .timer-text {
+      color: #64748b;
+      font-size: 13px;
+    }
+
+    /* COLORS */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .color-btn {
+      border: 0;
+      border-radius: 16px;
+      padding: 17px 5px;
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .15s;
+    }
+
+    .color-btn:active {
+      transform: scale(.95);
+    }
+
+    .red {
+      background: #ef4444;
+    }
+
+    .green {
+      background: #22c55e;
+    }
+
+    .purple {
+      background: #8b5cf6;
+    }
+
+    .color-btn.selected {
+      box-shadow: 0 0 0 4px #111827;
+      transform: translateY(-2px);
+    }
+
+    /* INPUT */
+    .input-label {
+      display: block;
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 7px;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px;
+      border: 1px solid #e2e8f0;
+      border-radius: 13px;
+      outline: none;
+      font-size: 16px;
+      background: #f8fafc;
+    }
+
+    input:focus {
+      border-color: #64748b;
+    }
+
+    /* PLAY BUTTON */
+    .play-btn {
+      width: 100%;
+      border: 0;
+      border-radius: 14px;
+      padding: 16px;
+      margin-top: 12px;
+      background: #111827;
+      color: white;
+      font-size: 17px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .play-btn:active {
+      transform: scale(.98);
+    }
+
+    .message {
+      min-height: 24px;
+      text-align: center;
+      margin-top: 13px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    /* HISTORY */
+    .history-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 0;
+      border-bottom: 1px solid #edf0f4;
+    }
+
+    .history-item:last-child {
+      border-bottom: 0;
+    }
+
+    .history-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .dot {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dot.red {
+      background: #fee2e2;
+    }
+
+    .dot.green {
+      background: #dcfce7;
+    }
+
+    .dot.purple {
+      background: #ede9fe;
+    }
+
+    .history-name {
+      font-weight: 700;
+    }
+
+    .history-round {
+      color: #94a3b8;
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    /* BOTTOM NAV */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 68px;
+      background: white;
+      border-top: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .nav-item {
+      text-align: center;
+      color: #64748b;
+      font-size: 12px;
+    }
+
+    .nav-icon {
+      font-size: 23px;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* DEMO NOTE */
+    .demo-note {
+      text-align: center;
+      color: #94a3b8;
+      font-size: 11px;
+      line-height: 18px;
+      margin: 20px 10px;
+    }
+
+    @media (min-width: 600px) {
+      body {
+        padding-bottom: 20px;
+      }
+
+      .bottom-nav {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="topbar">
+
+    <div class="top-row">
+
+      <div class="logo">
+        🎨 Colour Demo
+      </div>
+
+      <div class="profile">
+        👤
+      </div>
+
+    </div>
+
+    <div class="balance-box">
+
+      <div class="balance-title">
+        वर्चुअल बैलेंस
+      </div>
+
+      <div class="balance">
+        🪙 <span id="balance">1000</span>
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <main class="container">
+
+    <!-- TIMER -->
+    <section class="card timer-card">
+
+      <div class="round-label">
+        ROUND #<span id="round">1</span>
+      </div>
+
+      <div class="timer">
+        <span id="timer">30</span>
+      </div>
+
+      <div class="timer-text">
+        अगले डेमो राउंड के लिए समय
+      </div>
+
+    </section>
+
+
+    <!-- COLOR -->
+    <section class="card">
+
+      <div class="card-title">
+        🎨 रंग चुनें
+      </div>
+
+      <div class="color-grid">
+
+        <button
+          class="color-btn red"
+          onclick="selectColor('लाल', this)">
+          🔴 लाल
+        </button>
+
+        <button
+          class="color-btn green"
+          onclick="selectColor('हरा', this)">
+          🟢 हरा
+        </button>
+
+        <button
+          class="color-btn purple"
+          onclick="selectColor('बैंगनी', this)">
+          🟣 बैंगनी
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- POINTS -->
+    <section class="card">
+
+      <div class="card-title">
+        🪙 वर्चुअल पॉइंट्स
+      </div>
+
+      <label class="input-label">
+        कितने पॉइंट्स इस्तेमाल करने हैं?
+      </label>
+
+      <input
+        id="points"
+        type="number"
+        min="1"
+        placeholder="उदाहरण: 50"
+      >
+
+      <button
+        class="play-btn"
+        onclick="play()">
+        डेमो राउंड शुरू करें
+      </button>
+
+      <div
+        class="message"
+        id="message">
+      </div>
+
+    </section>
+
+
+    <!-- HISTORY -->
+    <section class="card">
+
+      <div class="card-title">
+        📊 रिज़ल्ट हिस्ट्री
+      </div>
+
+      <div id="history">
+
+        <div class="history-item">
+
+          <div class="history-left">
+
+            <div class="dot red">
+              🔴
+            </div>
+
+            <div>
+              <div class="history-name">
+                कोई रिज़ल्ट नहीं
+              </div>
+
+              <div class="history-round">
+                पहला राउंड खेलें
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <div class="demo-note">
+      यह केवल शैक्षणिक डेमो है। इसमें वास्तविक पैसे,
+      डिपॉज़िट या विड्रॉल की सुविधा नहीं है।
+    </div>
+
+  </main>
+
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+
+    <div class="nav-item">
+      <span class="nav-icon">🏠</span>
+      होम
+    </div>
+
+  </nav>
+
+
+  <script>
+
+    let balance = 1000;
+    let selectedColor = null;
+    let round = 1;
+    let time = 30;
+
+    const balanceElement =
+      document.getElementById("balance");
+
+    const timerElement =
+      document.getElementById("timer");
+
+    const roundElement =
+      document.getElementById("round");
+
+    const messageElement =
+      document.getElementById("message");
+
+    const historyElement =
+      document.getElementById("history");
+
+
+    // रंग चुनना
+    function selectColor(color, button) {
+
+      selectedColor = color;
+
+      document
+        .querySelectorAll(".color-btn")
+        .forEach(btn => {
+          btn.classList.remove("selected");
+        });
+
+      button.classList.add("selected");
+
+      messageElement.textContent =
+        "आपने " + color + " चुना है।";
+
+    }
+
+
+    // डेमो राउंड
+    function play() {
+
+      if (!selectedColor) {
+
+        messageElement.textContent =
+          "⚠️ पहले कोई रंग चुनें।";
+
+        return;
+      }
+
+
+      const points =
+        Number(
+          document.getElementById("points").value
+        );
+
+
+      if (!points || points <= 0) {
+
+        messageElement.textContent =
+          "⚠️ वर्चुअल पॉइंट्स डालें।";
+
+        return;
+      }
+
+
+      if (points > balance) {
+
+        messageElement.textContent =
+          "⚠️ पर्याप्त वर्चुअल पॉइंट्स नहीं हैं।";
+
+        return;
+      }
+
+
+      // पॉइंट्स घटाना
+      balance -= points;
+
+
+      // Demo result
+      const colors = [
+        "लाल",
+        "हरा",
+        "बैंगनी"
+      ];
+
+      const result =
+        colors[
+          Math.floor(
+            Math.random() * colors.length
+          )
+        ];
+
+
+      // अगर रंग मैच हुआ
+      if (selectedColor === result) {
+
+        const reward = points * 2;
+
+        balance += reward;
+
+        messageElement.textContent =
+          "🎉 सही! +" +
+          reward +
+          " वर्चुअल पॉइंट्स";
+
+      } else {
+
+        messageElement.textContent =
+          "राउंड समाप्त। रिज़ल्ट: " +
+          result;
+
+      }
+
+
+      balanceElement.textContent =
+        balance;
+
+
+      // पहली खाली history हटाना
+      if (
+        historyElement.children.length === 1 &&
+        historyElement.children[0]
+          .querySelector(".history-name")
+          ?.textContent === "कोई रिज़ल्ट नहीं"
+      ) {
+        historyElement.innerHTML = "";
+      }
+
+
+      // History item
+      const item =
+        document.createElement("div");
+
+      item.className =
+        "history-item";
+
+
+      let emoji = "🔴";
+      let dotClass = "red";
+
+      if (result === "हरा") {
+        emoji = "🟢";
+        dotClass = "green";
+      }
+
+      if (result === "बैंगनी") {
+        emoji = "🟣";
+        dotClass = "purple";
+      }
+
+
+      item.innerHTML = `
+
+        <div class="history-left">
+
+          <div class="dot ${dotClass}">
+            ${emoji}
+          </div>
+
+          <div>
+
+            <div class="history-name">
+              ${result}
+            </div>
+
+            <div class="history-round">
+              Round #${round}
+            </div>
+
+          </div>
+
+        </div>
+
+        <div>
+          ${selectedColor === result
+            ? "✅ सही"
+            : "❌ गलत"}
+        </div>
+
+      `;
+
+
+      historyElement.prepend(item);
+
+
+      round++;
+
+      roundElement.textContent =
+        round;
+
+
+      document.getElementById("points")
+        .value = "";
+
+
+      selectedColor = null;
+
+
+      document
+        .querySelectorAll(".color-btn")
+        .forEach(btn => {
+          btn.classList.remove("selected");
+        });
+
+    }
+
+
+    // Timer
+    setInterval(function () {
+
+      time--;
+
+      timerElement.textContent =
+        time;
+
+
+      if (time <= 0) {
+
+        time = 30;
+
+        timerElement.textContent =
+          time;
+
+      }
+
+    }, 1000);
+
+  </script>
+
+</body>
+</html>
